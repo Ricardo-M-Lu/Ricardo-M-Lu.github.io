@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-03-24T20:29:42.956Z</updated>
+  <updated>2017-03-25T09:17:04.865Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,16 +16,146 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Python-Networking</title>
-    <link href="http://yoursite.com/2017/03/25/Python-Networking/"/>
-    <id>http://yoursite.com/2017/03/25/Python-Networking/</id>
+    <title>python网络编程：客户端/服务端网络编程简介</title>
+    <link href="http://yoursite.com/2017/03/25/Python_Network_Program_1/"/>
+    <id>http://yoursite.com/2017/03/25/Python_Network_Program_1/</id>
     <published>2017-03-24T20:29:42.000Z</published>
-    <updated>2017-03-24T20:29:42.956Z</updated>
+    <updated>2017-03-25T09:17:04.865Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="客户端-服务端网络编程"><a href="#客户端-服务端网络编程" class="headerlink" title="客户端/服务端网络编程"></a>客户端/服务端网络编程</h2><h3 id="1-1-基础：协议栈与库"><a href="#1-1-基础：协议栈与库" class="headerlink" title="1.1 基础：协议栈与库"></a>1.1 基础：协议栈与库</h3><ul>
+<li>协议栈（Protocol stack） 复杂的网络服务建立在简单网络服务的基础之上</li>
+<li>Python库（library） 包括内置的标准库和第三方库，来解析使用的网络协议</li>
+</ul>
+<p>要学习的内容就是<em>了解重要的网络库，并理解这些网络库所出现的底层网络服务。</em></p>
+<h3 id="1-2-一个有趣的例子"><a href="#1-2-一个有趣的例子" class="headerlink" title="1.2 一个有趣的例子"></a>1.2 一个有趣的例子</h3><p>Question: 找出’ 207 N. Defiance St , Archbold, OH ‘所对应的经度纬度。</p>
+<h3 id="1-2-1-最上层的谷歌地理编码API"><a href="#1-2-1-最上层的谷歌地理编码API" class="headerlink" title="1.2.1 最上层的谷歌地理编码API"></a>1.2.1 最上层的谷歌地理编码API</h3><p><strong>使用第三方库获取经度和纬度</strong></p>
+<ul>
+<li>step 0:寻找一个第三方包<ol>
+<li>python standard library:<a href="https://docs.python.org/3/library/" target="_blank" rel="external">https://docs.python.org/3/library/</a></li>
+<li>python package index:<a href="https://pypi.python.org/pypi" target="_blank" rel="external">https://pypi.python.org/pypi</a></li>
+</ol>
+</li>
+</ul>
+<ul>
+<li>step 1:下载安装一个第三方包：pygeocoder</li>
+<li>step 2:运行</li>
+</ul>
+<p>虽然把一个有趣的网络编程问题变成一个三行的无聊脚本很让人不爽，但是90%的编程挑战就是这么解决的——在已有的解决方案的基础上构建智能又简洁的方案。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python3</span></div><div class="line"><span class="comment">#search1.py</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> pygeocoder <span class="keyword">import</span> Geocoder</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    address = <span class="string">'207 N. Defiance St, Archbold, OH'</span></div><div class="line">    print(Geocoder.geocode(address)[<span class="number">0</span>].coordinates)</div></pre></td></tr></table></figure>
+<h3 id="1-2-2-应用层"><a href="#1-2-2-应用层" class="headerlink" title="1.2.2 应用层"></a>1.2.2 应用层</h3><p><strong>从谷歌地理编码API获取一个JSON文档</strong></p>
+<ul>
+<li>step 0:如果没有一个完整封装了所需要功能的第三方库，就需要我们自己为谷歌地图API编写客户端</li>
+<li>step 1:构造URL，获得查询响应</li>
+<li>step 2:将结果转化为JSON</li>
+</ul>
+<p><strong>request库文档</strong><br><a href="http://docs.python-requests.org/en/master/" target="_blank" rel="external">http://docs.python-requests.org/en/master/</a></p>
+<ol>
+<li><p>使用requests发送网络请求</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="comment">#获取 Github 的公共时间线：</span></div><div class="line">r = requests.get(<span class="string">'https://github.com/timeline.json'</span>)</div></pre></td></tr></table></figure>
+</li>
+<li><p>传递URL参数<br>例如， httpbin.org/get?key=val。<br>使用Requests允许使用params关键字参数，以一个字典来提供查询字符串的参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">payload = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>, <span class="string">'key2'</span>: <span class="string">'value2'</span>&#125;</div><div class="line">r = requests.get(<span class="string">"http://httpbin.org/get"</span>, params=payload)</div><div class="line">print(r.url)</div><div class="line"><span class="comment"># 输出http://httpbin.org/get?key2=value2&amp;key1=value1</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>json解码</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">r = requests.get(<span class="string">'https://github.com/timeline.json'</span>)</div><div class="line">r.json()</div><div class="line"><span class="comment">#[&#123;u'repository': &#123;u'open_issues': 0, u'url': 'https://github.com/...</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python3</span></div><div class="line"><span class="comment">#search2.py</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">geocode</span><span class="params">(address)</span>:</span></div><div class="line">    parameters = &#123;<span class="string">'address'</span>: address, <span class="string">'sensor'</span>: <span class="string">'false'</span>&#125;</div><div class="line">    base = <span class="string">'http://maps.googleapis.com/maps/api/geocode/json'</span></div><div class="line">    response = requests.get(base, params=parameters)</div><div class="line">    answer = response.json()</div><div class="line">    print(answer[<span class="string">'results'</span>][<span class="number">0</span>][<span class="string">'geometry'</span>][<span class="string">'location'</span>])</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    geocode(<span class="string">'207 N. Defiance St, Archbold, OH'</span>)</div></pre></td></tr></table></figure>
+<h3 id="什么是URL？"><a href="#什么是URL？" class="headerlink" title="什么是URL？"></a>什么是URL？</h3><p><code>http://maps.googleapis.com/maps/api/geocode/json?address=&quot;207 N. Defiance St, Archbold, OH&quot;&amp;sensor=false</code></p>
+<p><strong>协议 主机名 主机上特定文档的路径</strong></p>
+<p>这里我们使用的底层协议就是著名的HTTP（Hypertext Transfer Protocol）</p>
+<p>Requests库的具体原理机制其实就是由HTTP提供的</p>
+<h3 id="1-2-3-直接使用http协议"><a href="#1-2-3-直接使用http协议" class="headerlink" title="1.2.3 直接使用http协议"></a>1.2.3 直接使用http协议</h3><p><strong> 使用原始http操作连接谷歌地图 </strong></p>
+<ol>
+<li>step 1:请求连接一台特定的主机</li>
+<li>step 2:手动构造一个带path的GET查询</li>
+<li>step 3:直接从http连接读取响应结果。</li>
+</ol>
+<h3 id="http和json"><a href="#http和json" class="headerlink" title="http和json"></a>http和json</h3><ul>
+<li><p>class http.client.HTTPConnection(host, port=None, [timeout, ]source_address=None)</p>
+<p>  <strong>与HTTP服务器建立连接</strong><br>  <img src="http://onc55v8te.bkt.clouddn.com/blog/20170325/072512614.png" alt="mark"></p>
+<p>  例如，以下调用创建连接到同一主机和端口上的服务器的实例：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;</div><div class="line">&gt;&gt;&gt; h1 = http.client.HTTPConnection(&apos;www.python.org&apos;)</div><div class="line">&gt;&gt;&gt; h2 = http.client.HTTPConnection(&apos;www.python.org:80&apos;)</div><div class="line">&gt;&gt;&gt; h3 = http.client.HTTPConnection(&apos;www.python.org&apos;, 80)</div><div class="line">&gt;&gt;&gt; h4 = http.client.HTTPConnection(&apos;www.python.org&apos;, 80, timeout=10)</div></pre></td></tr></table></figure>
+<ul>
+<li><p><code>json.loads(s, *, encoding=None, cls=None, object_hook=None, parse_float=None, parse_int=None, parse_constant=None, object_pairs_hook=None, **kw)</code></p>
+<p> <strong>按照conversion table将s对象（包含JSON文档的str，bytes或bytearray实例）反序列化为Python对象。</strong></p>
+<p> <img src="http://onc55v8te.bkt.clouddn.com/blog/20170325/073931487.png" alt="mark"></p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python3</span></div><div class="line"><span class="comment">#search3.py</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> http.client</div><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> quote_plus</div><div class="line"></div><div class="line">base = <span class="string">'/maps/api/geocode/json'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">geocode</span><span class="params">(address)</span>:</span></div><div class="line">    path = <span class="string">'&#123;&#125;?address=&#123;&#125;&amp;sensor=false'</span>.format(base, quote_plus(address))</div><div class="line">    connection = http.client.HTTPConnection(<span class="string">'maps.googleapis.com'</span>)</div><div class="line">    connection.request(<span class="string">'GET'</span>, path)</div><div class="line">    rawreply = connection.getresponse().read()</div><div class="line">    reply = json.loads(rawreply.decode(<span class="string">'utf-8'</span>))</div><div class="line">    print(reply[<span class="string">'results'</span>][<span class="number">0</span>][<span class="string">'geometry'</span>][<span class="string">'location'</span>])</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    geocode(<span class="string">'207 N. Defiance St, Archbold, OH'</span>)</div></pre></td></tr></table></figure>
+<h3 id="1-2-4-更原始的网络会话"><a href="#1-2-4-更原始的网络会话" class="headerlink" title="1.2.4 更原始的网络会话"></a>1.2.4 更原始的网络会话</h3><p>HTTP是无法通过空气在机器间传输数据的，它使用了更简单的抽象来完成这些操作。</p>
+<p>事实上，现代操作系统提供了使用TCP协议在IP网络的不同程序间进行纯文本网络会话的功能。</p>
+<p>换句话说，HTTP协议精准描述了两台主机间通过TCP传输的信息格式，并以此提供HTTP的各项功能。</p>
+<p>如果深入观察HTTP的实现细节，那么你将到达通过Python可以方便操作的网络协议栈的最底层（撒花）</p>
+<p><strong> 直接使用套接字与谷歌地图通信 </strong></p>
+<ul>
+<li>step 1 发送字节串</li>
+<li>step 2 接收字节串并打印到屏幕</li>
+</ul>
+<p>我们可以通过sendall()函数传入的参数来了解到我们进行查询的具体内容。<br>可以看到<strong><code>GET /maps/api/geocode/json?address={}&amp;sensor=false HTTP/1.1\r\n\</code></strong><br>查询中包括了关键字GET,后面跟着待获取文档的路径和支持的HTTP版本。<br>此外可以看到，GET信息后跟着一些请求头，每个请求头包括了名称，冒号，值，结束符（回车换行）</p>
+<p><strong>这些状态和响应头就是之前程序中被我们用http库处理的底层细节。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python3</span></div><div class="line"><span class="comment">#search4.py</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> quote_plus</div><div class="line"></div><div class="line">request_text = <span class="string">"""\</span></div><div class="line">GET /maps/api/geocode/json?address=&#123;&#125;&amp;sensor=false HTTP/1.1\r\n\</div><div class="line">Host: maps.googleapis.com:80\r\n\</div><div class="line">User-Agent: search4.py (Foundations of Python Network Programming)\r\n\</div><div class="line">Connection: close\r\n\</div><div class="line">\r\n\</div><div class="line">"""</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">geocode</span><span class="params">(address)</span>:</span></div><div class="line">    sock = socket.socket()</div><div class="line">    sock.connect((<span class="string">'maps.googleapis.com'</span>, <span class="number">80</span>))</div><div class="line">    request = request_text.format(quote_plus(address))</div><div class="line">    sock.sendall(request.encode(<span class="string">'ascii'</span>))</div><div class="line">    raw_reply = <span class="string">b''</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        more = sock.recv(<span class="number">4096</span>)</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> more:</div><div class="line">            <span class="keyword">break</span></div><div class="line">        raw_reply += more</div><div class="line">    print(raw_reply.decode(<span class="string">'utf-8'</span>))</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    geocode(<span class="string">'207 N. Defiance St, Archbold, OH'</span>)</div></pre></td></tr></table></figure>
+<h3 id="1-2-5-层层深入"><a href="#1-2-5-层层深入" class="headerlink" title="1.2.5 层层深入"></a>1.2.5 层层深入</h3><ol>
+<li>可以看到，协议栈的每一层都是使用了底层协议提供的功能，并向上层提供服务。</li>
+<li>Python对各网络层的支持十分全面,无论是获取特定URL标识的文档还是使用socket来接收字节串，python都提供了现成的类和函数。</li>
+<li>随着通信协议越来越底层，程序的质量明显下降。search2.py和search3.py对查询的表单结构和主机名等进行了硬编码，难以维护。search4.py更是包含了一个手写的、无参数的HTTP请求。<br>这说明正确实现网络协议并非易事，应该尽可能的使用标准库或者第三方库。</li>
+<li>高层的网络协议会将底层网络的细节隐藏，如果只用过pygeocoder库，将永远不知道URL和HTTP是它的底层机制。</li>
+</ol>
+<h3 id="1-2-6-编码和解码"><a href="#1-2-6-编码和解码" class="headerlink" title="1.2.6 编码和解码"></a>1.2.6 编码和解码</h3><p>python3做了一项尝试，永远不会自动将字节转换为字符串。因此比起Python2，Python3更多的调用decode()和encode()方法</p>
+<ul>
+<li>解码(decode)：在应用程序使用字节时发生，比如从网络或文件接收到字节串。</li>
+<li>编码(encode): 将字符串对外输出时所实施的过程。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python3</span></div><div class="line"><span class="comment">#stringcodes.py</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="comment"># Translating from the outside world of bytes to Unicode characters.</span></div><div class="line">    input_bytes = <span class="string">b'\xff\xfe4\x001\x003\x00 \x00i\x00s\x00 \x00i\x00n\x00.\x00'</span></div><div class="line">    input_characters = input_bytes.decode(<span class="string">'utf-16'</span>)</div><div class="line">    print(repr(input_characters))</div><div class="line"></div><div class="line">    <span class="comment"># Translating characters back into bytes before sending them.</span></div><div class="line">    output_characters = <span class="string">'We copy you down, Eagle.\n'</span></div><div class="line">    output_bytes = output_characters.encode(<span class="string">'utf-8'</span>)</div><div class="line">    print(repr(output_bytes))</div><div class="line">    <span class="comment"># output</span></div><div class="line">    <span class="comment"># '413 is in.'</span></div><div class="line">    <span class="comment"># b'We copy you down, Eagle.\n'</span></div></pre></td></tr></table></figure>
+<pre><code>&apos;413 is in.&apos;
+b&apos;We copy you down, Eagle.\n&apos;
+</code></pre><h3 id="1-2-7-IP地址"><a href="#1-2-7-IP地址" class="headerlink" title="1.2.7 IP地址"></a>1.2.7 IP地址</h3><p>一个传统的4字节IP地址如下表示：<br>130.207.244.244<br>由于纯数字不方便记忆，人们使用hostname代替IP，如我们输入google.com就可以访问谷歌，但其实它是将主机名解析成了具体的IP。<br>这个特定的网络服务叫做域名系统（DNS,Domain Name System）  </p>
+<p><strong>目前只需要记住</strong></p>
+<ul>
+<li>实际IP协议总是由数字表示的IP来作为数据包的目的地址</li>
+<li>将主机名解析为IP这一复杂的细节是由操作系统来处理的</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python3</span></div><div class="line"><span class="comment"># getname.py</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    hostname = <span class="string">'maps.google.com'</span></div><div class="line">    addr = socket.gethostbyname(hostname)</div><div class="line">    print(<span class="string">'The IP address of &#123;&#125; is &#123;&#125;'</span>.format(hostname, addr))</div><div class="line">    <span class="comment">#output</span></div><div class="line">    <span class="comment">#The IP address of maps.google.com is 172.217.24.14</span></div></pre></td></tr></table></figure>
+<pre><code>The IP address of maps.google.com is 172.217.24.14
+</code></pre><h3 id="特殊的IP地址段"><a href="#特殊的IP地址段" class="headerlink" title="特殊的IP地址段"></a>特殊的IP地址段</h3><ul>
+<li><code>127.*.*.*</code>：特殊的预留地址段<br> <strong>这一地址段由机器上运行的本地应用程序使用</strong><br> 大多数时候，我们使用127.0.0.1或者localhost表示<strong>运行该程序的机器本身</strong>。</li>
+<li><code>10.*.*.*、176.16-31.*.*、192.168.*.*</code>：<strong>私有子网</strong></li>
+</ul>
+<h3 id="1-2-8-路由"><a href="#1-2-8-路由" class="headerlink" title="1.2.8 路由"></a>1.2.8 路由</h3><p>一旦应用程序请求操作系统向某一特定IP地址发送数据，操作系统就需要决定如何使用该机器来连接物理网络来传输数据。<br><strong>根据目的IP地址选择将数据包发往何处就叫做路由</strong></p>
+<p><img src="http://onc55v8te.bkt.clouddn.com/blog/20170325/160903555.png" alt="mark"><br>在网络协议中，IP是面向非连接的，所谓的非连接就是传递数据的时候，不检测网络是否连通。所以是不可靠的数据报协议，<strong>IP协议主要负责在主机之间寻址和选择数据包路由</strong>。<br>由于python程序很少运行在骨干网路由器上，所以只需记住以下简单路由的情形。</p>
+<ul>
+<li>如果IP地址形如<code>127.*.*.*</code>，那么操作系统会知道数据包的目的地址是本机上运行的另一个应用程序。这个数据包甚至不会被传送给物理网络设备，而是通过操作系统内部的数据复制转交给另一应用程序。</li>
+<li>如果目的IP地址与本机处于同一子网，就可以通过检查本地以太网段、无线信道，或是其他任何网络信息来找到目标主机。然后就可以将数据包发送给本地连接的机器。</li>
+<li>否则，计算机将数据包转发给网关（gateway machine），它将本地子网连接至互联网，然后决定将数据包发往何处。</li>
+</ul>
+<h3 id="什么是子网？"><a href="#什么是子网？" class="headerlink" title="什么是子网？"></a>什么是子网？</h3><p>同一子网中所有主机有着相同的IP地址前缀。<strong>实际的路由表中，通过结合IP地址和掩码来表示子网</strong>。<br><strong>掩码指出了某主机属于某子网所需的高位比特匹配数</strong>。只需要记得IP地址的每字节代表8位二进制数，就能读懂子网的数字表示。</p>
+<ol>
+<li>127.0.0.0/8：描述了前面所述预留给本机的IP地址段，即地址的前8位必须与127匹配，后24位是任意值。</li>
+<li>192.168.0.0/16：描述了192.168私有地址段的任何IP地址，即地址的前16位必须完全匹配，后16位可以是任意值</li>
+<li>192.168.5.0/24：这里明确制定了一个特定的独立子网，是最常见的子网掩码。地址前24位（3字节）都被指定，用来匹配属于该子网的IP地址，只有最后一位不同，这就允许有256个不同的地址。</li>
+<li>通常来说，<strong>.0</strong>地址代表子网名，<strong>.255</strong>则用作“广播数据包”的目的地址：所以实际上有254个地址分配给计算机。<strong>.1</strong>地址通常用于连接外网的网关，但不是绝对的。</li>
+</ol>
+<h3 id="1-2-9-数据包分组"><a href="#1-2-9-数据包分组" class="headerlink" title="1.2.9 数据包分组"></a>1.2.9 数据包分组</h3><p>尽管操作系统的网络栈已经巧妙的隐藏了这一复杂的细节，但是这里还是简单的提一下。<br>IP支持的数据包极大，最大可至64KB，但是构建与IP网络之上的实际网络设备通常不支持这么大的数据包，所以需要分片。<br>IP头包含一个表示“不分组”的标记（DF,Don’t Fragment）</p>
+<ul>
+<li>没有设置DF,允许分组并标记，接收后重组。</li>
+<li>设置了DF标记，不允许分组，如果网络无法容纳数据包，将会丢弃并发挥一条错误信息，错误信息是由一种数据包表示的，叫做ICMP(Internet Control Message Protocal)</li>
+</ul>
+<p>Python程序无法控制DF标记，通常由操作系统决定，操作系统的逻辑一般是：<strong>UDP会话不设置DF标记，TCP会话设置DF标记（保证数据包在途中不会被不断分组，而导致会话低效）</strong></p>
+<p><a href="http://www.vants.org/?post=106" target="_blank" rel="external">关于IP分片(IP Fragment)的详细内容</a><br>另外，可以参考<strong>tcp/ip卷一11.5</strong><br><img src="http://onc55v8te.bkt.clouddn.com/blog/20170325/170750195.png" alt="mark"><br><img src="http://onc55v8te.bkt.clouddn.com/blog/20170325/170905057.png" alt="mark"></p>
+]]></content>
     
     <summary type="html">
     
+      &lt;h2 id=&quot;客户端-服务端网络编程&quot;&gt;&lt;a href=&quot;#客户端-服务端网络编程&quot; class=&quot;headerlink&quot; title=&quot;客户端/服务端网络编程&quot;&gt;&lt;/a&gt;客户端/服务端网络编程&lt;/h2&gt;&lt;h3 id=&quot;1-1-基础：协议栈与库&quot;&gt;&lt;a href=&quot;#1-1-基
+    
     </summary>
     
+    
+      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
+    
+      <category term="Network" scheme="http://yoursite.com/tags/Network/"/>
     
   </entry>
   
@@ -34,7 +164,7 @@
     <link href="http://yoursite.com/2017/03/25/hello-world/"/>
     <id>http://yoursite.com/2017/03/25/hello-world/</id>
     <published>2017-03-24T16:36:58.071Z</published>
-    <updated>2017-03-24T20:39:48.125Z</updated>
+    <updated>2017-03-24T22:08:23.656Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
