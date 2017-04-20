@@ -6,14 +6,33 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2017/3 | sakuraのblog</title>
+  <title>排序 | sakuraのblog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="sakuraのblog">
-<meta property="og:url" content="http://yoursite.com/archives/2017/03/index.html">
+  <meta name="description" content="前言因为发现自己好像已经很久没有像样的写过算法了……慢慢的重新整理算法吧。写成一个系列算了~（反正也是按照书的顺序简单记笔记）
+初级排序算法选择排序算法思想：首先，找到数组中最小的那个元素，然后将它和数组第一个元素交换位置。然后在剩下的元素中找到最小的元素，和第二个元素交换位置。如此往复，因为它总是在不断地选择剩余元素中的最小者，所以是选择排序。
+
+从左向右移动指针 i++
+确定在右边最小项的索引">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序">
+<meta property="og:url" content="http://yoursite.com/2017/04/21/algorithm_sort/index.html">
 <meta property="og:site_name" content="sakuraのblog">
+<meta property="og:description" content="前言因为发现自己好像已经很久没有像样的写过算法了……慢慢的重新整理算法吧。写成一个系列算了~（反正也是按照书的顺序简单记笔记）
+初级排序算法选择排序算法思想：首先，找到数组中最小的那个元素，然后将它和数组第一个元素交换位置。然后在剩下的元素中找到最小的元素，和第二个元素交换位置。如此往复，因为它总是在不断地选择剩余元素中的最小者，所以是选择排序。
+
+从左向右移动指针 i++
+确定在右边最小项的索引">
+<meta property="og:image" content="http://onc55v8te.bkt.clouddn.com/blog/20170421/031419468.png">
+<meta property="og:image" content="http://onc55v8te.bkt.clouddn.com/blog/20170421/032016688.png">
+<meta property="og:updated_time" content="2017-04-20T19:30:39.885Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sakuraのblog">
+<meta name="twitter:title" content="排序">
+<meta name="twitter:description" content="前言因为发现自己好像已经很久没有像样的写过算法了……慢慢的重新整理算法吧。写成一个系列算了~（反正也是按照书的顺序简单记笔记）
+初级排序算法选择排序算法思想：首先，找到数组中最小的那个元素，然后将它和数组第一个元素交换位置。然后在剩下的元素中找到最小的元素，和第二个元素交换位置。如此往复，因为它总是在不断地选择剩余元素中的最小者，所以是选择排序。
+
+从左向右移动指针 i++
+确定在右边最小项的索引">
+<meta name="twitter:image" content="http://onc55v8te.bkt.clouddn.com/blog/20170421/031419468.png">
   
     <link rel="alternative" href="/atom.xml" title="sakuraのblog" type="application/atom+xml">
   
@@ -153,102 +172,158 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-algorithm_sort" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/25/Python_Network_Program_1/" class="archive-article-date">
-  	<time datetime="2017-03-24T20:29:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-25</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/25/Python_Network_Program_1/">python网络编程：客户端/服务端网络编程简介</a>
+    <h1 class="article-title" itemprop="name">
+      排序
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/04/21/algorithm_sort/" class="archive-article-date">
+  	<time datetime="2017-04-20T19:30:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>因为发现自己好像已经很久没有像样的写过算法了……慢慢的重新整理算法吧。<br>写成一个系列算了~（反正也是按照书的顺序简单记笔记）</strong></p>
+<h1 id="初级排序算法"><a href="#初级排序算法" class="headerlink" title="初级排序算法"></a>初级排序算法</h1><h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><h3 id="算法思想："><a href="#算法思想：" class="headerlink" title="算法思想："></a>算法思想：</h3><p>首先，找到数组中<strong>最小</strong>的那个元素，然后将它和数组第一个元素<strong>交换位置</strong>。然后在<strong>剩下的元素</strong>中找到<strong>最小</strong>的元素，和第二个元素<strong>交换位置</strong>。如此往复，因为它总是在<strong>不断地选择剩余元素中的最小者</strong>，所以是选择排序。</p>
+<ol>
+<li>从左向右移动指针<br> <code>i++</code></li>
+<li>确定在右边最小项的索引 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> min=i;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;N;j++)</div><div class="line">  <span class="keyword">if</span>(less(a[j],a[min])<span class="comment">//如果a[j]&lt;a[min]</span></div><div class="line">    min=j;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li>交换位置<br> <code>exch(a,i,min);</code></li>
+</ol>
+<h3 id="代码实现（java）"><a href="#代码实现（java）" class="headerlink" title="代码实现（java）"></a>代码实现（java）</h3><p><img src="http://onc55v8te.bkt.clouddn.com/blog/20170421/031419468.png" alt="mark"></p>
+<h3 id="效率分析"><a href="#效率分析" class="headerlink" title="效率分析"></a>效率分析</h3><p><img src="http://onc55v8te.bkt.clouddn.com/blog/20170421/032016688.png" alt="mark"><br>比较次数：首先寻找第一个最小项，除了它本身之外，都做一次比较，所以是N-1次；到最后一个最小项，无需比较，所以是0次。<br>$$(N-1)+(N-2)+…+1+0 \approx N^2/2$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Network</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/04/21/algorithm_sort/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/25/hello-world/" class="archive-article-date">
-  	<time datetime="2017-03-24T16:36:58.071Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-25</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/25/hello-world/">Hello World</a>
-    </h1>
+  
+    <a href="/2017/03/25/Python_Network_Program_1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python网络编程：客户端/服务端网络编程简介</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="algorithm_sort" data-title="排序" data-url="http://yoursite.com/2017/04/21/algorithm_sort/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"litten-hexo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">hello</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -271,8 +346,8 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

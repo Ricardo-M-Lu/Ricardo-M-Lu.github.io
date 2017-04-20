@@ -155,6 +155,80 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-algorithm_sort" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/21/algorithm_sort/">排序</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/21/algorithm_sort/" class="archive-article-date">
+  	<time datetime="2017-04-20T19:30:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>因为发现自己好像已经很久没有像样的写过算法了……慢慢的重新整理算法吧。<br>写成一个系列算了~（反正也是按照书的顺序简单记笔记）</strong></p>
+<h1 id="初级排序算法"><a href="#初级排序算法" class="headerlink" title="初级排序算法"></a>初级排序算法</h1><h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><h3 id="算法思想："><a href="#算法思想：" class="headerlink" title="算法思想："></a>算法思想：</h3><p>首先，找到数组中<strong>最小</strong>的那个元素，然后将它和数组第一个元素<strong>交换位置</strong>。然后在<strong>剩下的元素</strong>中找到<strong>最小</strong>的元素，和第二个元素<strong>交换位置</strong>。如此往复，因为它总是在<strong>不断地选择剩余元素中的最小者</strong>，所以是选择排序。</p>
+<ol>
+<li>从左向右移动指针<br> <code>i++</code></li>
+<li>确定在右边最小项的索引 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> min=i;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;N;j++)</div><div class="line">  <span class="keyword">if</span>(less(a[j],a[min])<span class="comment">//如果a[j]&lt;a[min]</span></div><div class="line">    min=j;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li>交换位置<br> <code>exch(a,i,min);</code></li>
+</ol>
+<h3 id="代码实现（java）"><a href="#代码实现（java）" class="headerlink" title="代码实现（java）"></a>代码实现（java）</h3><p><img src="http://onc55v8te.bkt.clouddn.com/blog/20170421/031419468.png" alt="mark"></p>
+<h3 id="效率分析"><a href="#效率分析" class="headerlink" title="效率分析"></a>效率分析</h3><p><img src="http://onc55v8te.bkt.clouddn.com/blog/20170421/032016688.png" alt="mark"><br>比较次数：首先寻找第一个最小项，除了它本身之外，都做一次比较，所以是N-1次；到最后一个最小项，无需比较，所以是0次。<br>$$(N-1)+(N-2)+…+1+0 \approx N^2/2$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/21/algorithm_sort/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-Python_Network_Program_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -506,6 +580,10 @@ b&apos;We copy you down, Eagle.\n&apos;
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
             
             <div class="clearfix"></div>
