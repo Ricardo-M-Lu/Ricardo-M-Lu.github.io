@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-04-22T17:54:46.606Z</updated>
+  <updated>2017-04-22T17:58:49.791Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>基本排序算法</title>
-    <link href="http://yoursite.com/2017/04/23/algorithm_sort/"/>
-    <id>http://yoursite.com/2017/04/23/algorithm_sort/</id>
+    <title>基本排序算法的分析与实现</title>
+    <link href="http://yoursite.com/2017/04/23/algorithm_sort_1/"/>
+    <id>http://yoursite.com/2017/04/23/algorithm_sort_1/</id>
     <published>2017-04-22T17:29:42.000Z</published>
-    <updated>2017-04-22T17:54:46.606Z</updated>
+    <updated>2017-04-22T17:58:49.791Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>因为发现自己好像已经很久没有像样的写过算法了……慢慢的重新整理算法吧。<br>写成一个系列算了~（反正也是按照书的顺序简单记笔记）</strong></p>
 <h1 id="初级排序算法"><a href="#初级排序算法" class="headerlink" title="初级排序算法"></a>初级排序算法</h1><h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><h3 id="算法思想："><a href="#算法思想：" class="headerlink" title="算法思想："></a>算法思想：</h3><p>首先，找到数组中<strong>最小</strong>的那个元素，然后将它和数组第一个元素<strong>交换位置</strong>。然后在<strong>剩下的元素</strong>中找到<strong>最小</strong>的元素，和第二个元素<strong>交换位置</strong>。如此往复，因为它总是在<strong>不断地选择剩余元素中的最小者</strong>，所以是选择排序。</p>
