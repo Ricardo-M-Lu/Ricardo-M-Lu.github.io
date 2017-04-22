@@ -188,9 +188,11 @@ var _hmt = _hmt || [];
 <h3 id="代码实现（java）"><a href="#代码实现（java）" class="headerlink" title="代码实现（java）"></a>代码实现（java）</h3><p><img src="http://onc55v8te.bkt.clouddn.com/blog/20170421/031419468.png" alt="mark"></p>
 <h3 id="效率分析"><a href="#效率分析" class="headerlink" title="效率分析"></a>效率分析</h3><p><strong>对于长度为N的数组，选择排序大约需要N^2/2次比较和N次交换</strong><br>比较次数：首先寻找第一个最小项，除了它本身之外，都做一次比较，所以是N-1次；到最后一个最小项，无需比较，所以是0次，共需：<br><img src="http://onc55v8te.bkt.clouddn.com/blog/20170421/034022029.png" alt="mark"><br>交换次数：每选择一个元素交换一次，共需N次<br><img src="http://onc55v8te.bkt.clouddn.com/blog/20170421/032016688.png" alt="mark"></p>
 <h3 id="算法特点"><a href="#算法特点" class="headerlink" title="算法特点"></a>算法特点</h3><ul>
-<li>运行时间和输入无关。<pre><code>1. 一个已经有序的数组和一个随机排列的数组所用的排序时间一样长！
+<li><p>运行时间和输入无关。</p>
+<pre><code>1. 一个已经有序的数组和一个随机排列的数组所用的排序时间一样长！
 </code></pre></li>
-<li>数据的移动是最少的。<pre><code>2. 交换次数和数组的大小是线性关系
+<li><p>数据的移动是最少的。</p>
+<pre><code>2. 交换次数和数组的大小是线性关系
 </code></pre></li>
 </ul>
 <h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><h3 id="算法思想"><a href="#算法思想" class="headerlink" title="算法思想"></a>算法思想</h3><ol>
@@ -249,12 +251,12 @@ var _hmt = _hmt || [];
 <li><p>将a[lo]作为切分元素<br><img src="http://onc55v8te.bkt.clouddn.com/blog/20170423/010412503.png" alt="mark"></p>
 </li>
 <li><p>让i从左向右扫描</p>
-<ol>
-<li>a[i]&lt;v,将a[lt]和a[i]交换，lt和i右移  </li>
-<li>a[i]&gt;v,将a[gt]和a[i]交换，gt左移  </li>
-<li>a[i]=v,将i右移</li>
-</ol>
-</li>
+<pre><code>1. a[i]&lt;v,将a[lt]和a[i]交换，lt和i右移
+
+2. a[i]&gt;v,将a[gt]和a[i]交换，gt左移
+
+3. a[i]=v,将i右移
+</code></pre></li>
 </ul>
 <p><img src="http://onc55v8te.bkt.clouddn.com/blog/20170423/011802918.png" alt="mark"><br><img src="http://onc55v8te.bkt.clouddn.com/blog/20170423/010811230.png" alt="mark">    </p>
 <h3 id="算法实现-3"><a href="#算法实现-3" class="headerlink" title="算法实现"></a>算法实现</h3><p><img src="http://onc55v8te.bkt.clouddn.com/blog/20170423/011043298.png" alt="mark"></p>
