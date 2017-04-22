@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-04-22T17:38:03.089Z</updated>
+  <updated>2017-04-22T17:43:42.419Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,8 +19,8 @@
     <title>基本排序算法</title>
     <link href="http://yoursite.com/2017/04/23/algorithm_sort/"/>
     <id>http://yoursite.com/2017/04/23/algorithm_sort/</id>
-    <published>2017-04-22T17:22:02.000Z</published>
-    <updated>2017-04-22T17:38:03.089Z</updated>
+    <published>2017-04-22T17:43:42.000Z</published>
+    <updated>2017-04-22T17:43:42.419Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>因为发现自己好像已经很久没有像样的写过算法了……慢慢的重新整理算法吧。<br>写成一个系列算了~（反正也是按照书的顺序简单记笔记）</strong></p>
 <h1 id="初级排序算法"><a href="#初级排序算法" class="headerlink" title="初级排序算法"></a>初级排序算法</h1><h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><h3 id="算法思想："><a href="#算法思想：" class="headerlink" title="算法思想："></a>算法思想：</h3><p>首先，找到数组中<strong>最小</strong>的那个元素，然后将它和数组第一个元素<strong>交换位置</strong>。然后在<strong>剩下的元素</strong>中找到<strong>最小</strong>的元素，和第二个元素<strong>交换位置</strong>。如此往复，因为它总是在<strong>不断地选择剩余元素中的最小者</strong>，所以是选择排序。</p>
@@ -95,14 +95,16 @@
 <h3 id="算法思想-4"><a href="#算法思想-4" class="headerlink" title="算法思想"></a>算法思想</h3><ul>
 <li><p>将a[lo]作为切分元素<br><img src="http://onc55v8te.bkt.clouddn.com/blog/20170423/010412503.png" alt="mark"></p>
 </li>
-<li><p>让i从左向右扫描  </p>
-<pre><code>1. a[i]&lt;v,将a[lt]和a[i]交换，lt和i右移  
-2. a[i]&gt;v,将a[gt]和a[i]交换，gt左移  
-3. a[i]=v,将i右移
-</code></pre><p><img src="http://onc55v8te.bkt.clouddn.com/blog/20170423/011802918.png" alt="mark"><br><img src="http://onc55v8te.bkt.clouddn.com/blog/20170423/010811230.png" alt="mark">    </p>
-<h3 id="算法实现-3"><a href="#算法实现-3" class="headerlink" title="算法实现"></a>算法实现</h3><p><img src="http://onc55v8te.bkt.clouddn.com/blog/20170423/011043298.png" alt="mark"></p>
+<li><p>让i从左向右扫描</p>
+<ol>
+<li>a[i]&lt;v,将a[lt]和a[i]交换，lt和i右移  </li>
+<li>a[i]&gt;v,将a[gt]和a[i]交换，gt左移  </li>
+<li>a[i]=v,将i右移</li>
+</ol>
 </li>
 </ul>
+<p><img src="http://onc55v8te.bkt.clouddn.com/blog/20170423/011802918.png" alt="mark"><br><img src="http://onc55v8te.bkt.clouddn.com/blog/20170423/010811230.png" alt="mark">    </p>
+<h3 id="算法实现-3"><a href="#算法实现-3" class="headerlink" title="算法实现"></a>算法实现</h3><p><img src="http://onc55v8te.bkt.clouddn.com/blog/20170423/011043298.png" alt="mark"></p>
 ]]></content>
     
     <summary type="html">
